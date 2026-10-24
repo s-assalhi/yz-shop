@@ -181,7 +181,7 @@
     margin-left:4px;
   }
 
-  /* OVERLAY */
+  /* OVERLAY (product) */
   .overlay{
     position:fixed;
     inset:0;
@@ -217,6 +217,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    flex:0 0 auto;
   }
 
   .product-view{
@@ -276,8 +277,15 @@
     color:var(--accent);
   }
 
-  .whatsapp-btn{
+  /* KNOPPEN IN PRODUCT-OVERLAY */
+  .btn-row{
     margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .whatsapp-btn{
     display:flex;
     align-items:center;
     justify-content:center;
@@ -294,6 +302,26 @@
     border:none;
   }
 
+  .cart-add-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    background:var(--accent);
+    color:#171a1b;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    padding:15px 20px;
+    border-radius:12px;
+    font-size:15px;
+    border:none;
+    cursor:pointer;
+    transition:transform .1s ease;
+  }
+  .cart-add-btn:active{transform:scale(0.97);}
+
   @media(min-width:700px){
     .product-view{
 
@@ -304,7 +332,318 @@
       align-items:start;
     }
     .info{margin-top:0;}
-    .whatsapp-btn{width:auto;padding:15px 36px;}
+    .btn-row{flex-direction:row;flex-wrap:wrap;}
+    .btn-row .whatsapp-btn,
+    .btn-row .cart-add-btn{width:auto;padding:15px 36px;}
+  }
+
+  /* ZWEVENDE WINKELMAND-KNOP */
+  .cart-fab{
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    z-index:90;
+    width:60px;
+    height:60px;
+    min-width:56px;
+    min-height:56px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#171a1b;
+    border:none;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.5);
+  }
+  .cart-fab.show{display:flex;}
+  .cart-fab:active{transform:scale(0.94);}
+  .cart-fab svg{width:26px;height:26px;}
+
+  .cart-badge{
+    position:absolute;
+    top:-4px;
+    right:-4px;
+    min-width:24px;
+    height:24px;
+    padding:0 6px;
+    border-radius:999px;
+    background:#171a1b;
+    color:var(--accent);
+    border:2px solid var(--accent);
+    font-size:12px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  @keyframes badgePop{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.5);}
+    100%{transform:scale(1);}
+  }
+  .cart-badge.pulse{animation:badgePop .45s ease;}
+
+  /* WINKELMAND-PANEEL (slide-over) */
+  .cart-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:115;
+    display:none;
+  }
+  .cart-backdrop.open{display:block;}
+
+  .cart-panel{
+    position:fixed;
+    top:0;
+    right:0;
+    height:100%;
+    width:100%;
+    max-width:420px;
+    background:var(--bg-alt);
+    border-left:1px solid var(--border);
+    z-index:120;
+    transform:translateX(105%);
+    transition:transform .25s ease;
+    display:flex;
+    flex-direction:column;
+  }
+  .cart-panel.open{transform:translateX(0);}
+
+  .cart-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    border-bottom:1px solid var(--border);
+  }
+  .cart-head h2{
+    font-size:16px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  .cart-body{
+    flex:1;
+    overflow-y:auto;
+    padding:4px 16px;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .cart-empty{
+    color:var(--text-dim);
+    text-align:center;
+    padding:70px 16px;
+    font-size:14px;
+  }
+
+  .cart-line{
+    display:flex;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .cart-line:last-child{border-bottom:none;}
+
+  .cart-line-img{
+    width:64px;
+    height:64px;
+    flex:0 0 auto;
+    border-radius:8px;
+    object-fit:cover;
+    background:#0f1112;
+    border:1px solid var(--border);
+  }
+
+  .cart-line-info{
+    flex:1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+  }
+
+  .cart-line-title{
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+    line-height:1.3;
+  }
+
+  .cart-line-prijs{
+    font-size:12px;
+    color:var(--text-dim);
+  }
+
+  .cart-line-onder{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-top:auto;
+  }
+
+  .qty{display:flex;align-items:center;gap:10px;}
+  .qty-btn{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-size:17px;
+    font-weight:700;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .qty-btn:active{transform:scale(0.92);}
+  .qty-nr{
+    font-size:14px;
+    font-weight:700;
+    min-width:18px;
+    text-align:center;
+  }
+
+  .cart-line-totaal{
+    font-size:13px;
+    font-weight:700;
+    color:var(--accent);
+    white-space:nowrap;
+  }
+
+  .cart-foot{
+    border-top:1px solid var(--border);
+    padding:14px 16px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    background:var(--bg-alt);
+  }
+
+  .cart-subtotaal{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:15px;
+    font-weight:700;
+  }
+  .cart-subtotaal span:last-child{color:var(--accent);}
+
+  #cartNote{
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:14px;
+    font-family:inherit;
+    resize:none;
+    min-height:64px;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  #cartNote::placeholder{color:var(--text-dim);}
+  #cartNote:focus{border-color:var(--accent);}
+
+  /* BETAALKNOP */
+  .ideal-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    padding:14px 20px;
+    border-radius:12px;
+    background:var(--bg);
+    border:1px solid var(--accent);
+    color:var(--text);
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .1s ease,opacity .15s ease;
+  }
+  .ideal-btn:active{transform:scale(0.98);}
+  .ideal-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    border-color:var(--border);
+  }
+
+  .ideal-badge{
+    background:#ffffff;
+    color:#cc0066;
+    font-weight:800;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:.3px;
+    padding:3px 10px;
+    border-radius:6px;
+  }
+
+  .min-order{
+    font-size:12px;
+    color:var(--text-dim);
+    text-align:center;
+  }
+
+  /* BETAAL-SCHERM (volledig scherm) */
+  .checkout-overlay{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    z-index:200;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    text-align:center;
+  }
+  .checkout-overlay.open{display:flex;}
+
+  .spinner{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:4px solid var(--border);
+    border-top-color:var(--accent);
+    animation:spin .8s linear infinite;
+    margin-bottom:30px;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .checkout-bedrag{
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:12px;
+  }
+
+  .checkout-tekst{
+    color:var(--text-dim);
+    font-size:14px;
+    max-width:320px;
+    line-height:1.5;
+  }
+
+  .checkout-wa{
+    margin-top:28px;
+    font-size:13px;
+    color:var(--text-dim);
+    max-width:340px;
+    line-height:1.6;
+  }
+  .checkout-wa a{
+    color:var(--whatsapp);
+    font-weight:700;
+    text-decoration:underline;
   }
 </style>
 </head>
@@ -337,9 +676,45 @@
     <div class="info">
       <h1 id="productTitle"></h1>
       <div id="productPrice"></div>
-      <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank" rel="noopener">Bestel via WhatsApp</a>
+      <div class="btn-row">
+        <button id="cartAddBtn" class="cart-add-btn" type="button">In winkelmand</button>
+        <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank" rel="noopener">Bestel via WhatsApp</a>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- Zwevende winkelmand-knop -->
+<button class="cart-fab" id="cartFab" type="button" aria-label="Winkelmand openen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6 7h12l-1.3 10.3a2 2 0 0 1-2 1.7H9.3a2 2 0 0 1-2-1.7L6 7z"/>
+    <path d="M9 10V6a3 3 0 0 1 6 0v4"/>
+  </svg>
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+<!-- Winkelmand-paneel -->
+<div class="cart-backdrop" id="cartBackdrop"></div>
+<aside class="cart-panel" id="cartPanel" aria-label="Winkelmand">
+  <div class="cart-head">
+    <h2>Winkelmand</h2>
+    <button class="close-btn" id="cartClose" type="button" aria-label="Sluiten">&times;</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-subtotaal"><span>Subtotaal</span><span id="cartSubtotaal">€ 0,00</span></div>
+    <textarea id="cartNote" placeholder="Maat, naam/rugnummer of opmerking (optioneel)"></textarea>
+    <button class="ideal-btn" id="idealBtn" type="button">Betaal met <span class="ideal-badge">iDEAL</span></button>
+    <div class="min-order" id="minOrder" style="display:none;">Minimale bestelling € 10,00</div>
+  </div>
+</aside>
+
+<!-- Betaal-scherm -->
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="spinner"></div>
+  <div class="checkout-bedrag" id="checkoutBedrag"></div>
+  <div class="checkout-tekst">Je betaalt veilig via iDEAL in je eigen bankomgeving.</div>
+  <div class="checkout-wa">Stuur na je betaling je maat/opmerking via <a id="checkoutWa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
 </div>
 
 <script src="data.js"></script>
@@ -387,8 +762,10 @@
   const productTitle = document.getElementById('productTitle');
   const productPrice = document.getElementById('productPrice');
   const whatsappBtn = document.getElementById('whatsappBtn');
+  const cartAddBtn = document.getElementById('cartAddBtn');
 
   let actieveCat = 'Alles';
+  let huidigProduct = null;
 
   function formatPrice(p){
     if(p === undefined || p === null || p === '') return '';
@@ -396,6 +773,24 @@
     if(isNaN(num)) return String(p);
     return '€ ' + num.toFixed(2).replace('.', ',');
 
+  }
+
+  // Product heeft een bruikbare prijs?
+  function heeftPrijs(p){
+    if(!p) return false;
+    if(p.prijs === undefined || p.prijs === null || p.prijs === '') return false;
+    const n = Number(p.prijs);
+    return !isNaN(n);
+  }
+
+  function vindProduct(id){
+    for(let i = 0; i < PRODUCTS.length; i++){
+      if(PRODUCTS[i].id === id) return PRODUCTS[i];
+    }
+    for(let j = 0; j < PRODUCTS.length; j++){
+      if(String(PRODUCTS[j].id) === String(id)) return PRODUCTS[j];
+    }
+    return null;
   }
 
   function renderChips(){
@@ -455,7 +850,7 @@
       info.appendChild(title);
 
       const priceText = formatPrice(p.prijs);
-      if(priceText){
+      if(priceText && heeftPrijs(p)){
 
         const price = document.createElement('div');
         price.className = 'card-price';
@@ -469,6 +864,7 @@
   }
 
   function openProduct(p){
+    huidigProduct = p;
     const fotos = (p.fotos && p.fotos.length) ? p.fotos : (p.img ? [p.img] : []);
 
     mainPhoto.src = fotos[0] || '';
@@ -493,9 +889,20 @@
 
     productTitle.textContent = p.titel || '';
 
-    const priceText = formatPrice(p.prijs);
+    const prijsOk = heeftPrijs(p);
+    const priceText = prijsOk ? formatPrice(p.prijs) : '';
     productPrice.textContent = priceText;
     productPrice.style.display = priceText ? 'block' : 'none';
+
+    // Met prijs: WhatsApp-knop + "In winkelmand". Zonder prijs: alleen prijsvraag via WhatsApp.
+    if(prijsOk){
+      whatsappBtn.textContent = 'Bestel via WhatsApp';
+      cartAddBtn.style.display = 'flex';
+      cartAddBtn.disabled = false;
+    }else{
+      whatsappBtn.textContent = 'Vraag prijs via WhatsApp';
+      cartAddBtn.style.display = 'none';
+    }
 
     const message = 'Hoi! Ik wil graag "' + (p.titel || 'dit product') + '" bestellen.';
     whatsappBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
@@ -507,7 +914,9 @@
 
   function closeProduct(){
     overlay.classList.remove('open');
-    document.body.style.overflow = '';
+    if(!cartPanel.classList.contains('open')){
+      document.body.style.overflow = '';
+    }
   }
 
   closeBtn.addEventListener('click', closeProduct);
@@ -515,15 +924,279 @@
     if(e.target === overlay){ closeProduct(); }
   });
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){ closeProduct(); }
+    if(e.key === 'Escape'){
+      closeProduct();
+      sluitCart();
+    }
   });
 
   searchInput.addEventListener('input', function(){
     applyFilters();
   });
 
+  /* ================= WINKELMAND ================= */
+
+  const CART_KEY = 'yz_cart_v1';
+  const NOTE_KEY = 'yz_cart_note_v1';
+  const MIN_BESTELLING = 10;
+  const BETAAL_URL = 'https://rep-finance-1t6z.onrender.com/checkout';
+
+  const cartFab = document.getElementById('cartFab');
+  const cartBadge = document.getElementById('cartBadge');
+  const cartBackdrop = document.getElementById('cartBackdrop');
+  const cartPanel = document.getElementById('cartPanel');
+  const cartClose = document.getElementById('cartClose');
+  const cartBody = document.getElementById('cartBody');
+  const cartFoot = document.getElementById('cartFoot');
+  const cartSubtotaalEl = document.getElementById('cartSubtotaal');
+  const cartNoteEl = document.getElementById('cartNote');
+  const idealBtn = document.getElementById('idealBtn');
+  const minOrderEl = document.getElementById('minOrder');
+  const checkoutOverlay = document.getElementById('checkoutOverlay');
+  const checkoutBedrag = document.getElementById('checkoutBedrag');
+  const checkoutWa = document.getElementById('checkoutWa');
+
+  // Winkelmand herstellen uit opslag + valideren tegen de productlijst
+  // (onbekende artikelen of artikelen zonder prijs gaan eruit)
+  function laadCart(){
+    let raw = null;
+    try{
+      raw = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    }catch(e){ raw = null; }
+    if(!Array.isArray(raw)) return [];
+    const schoon = [];
+    raw.forEach(function(regel){
+      if(!regel) return;
+      const p = vindProduct(regel.id);
+      if(!p || !heeftPrijs(p)) return;
+      let qty = parseInt(regel.qty, 10);
+      if(!(qty > 0)) qty = 1;
+      const bestaand = schoon.find(function(r){ return String(r.id) === String(regel.id); });
+      if(bestaand){ bestaand.qty += qty; }
+      else{ schoon.push({ id: regel.id, qty: qty }); }
+    });
+    return schoon;
+  }
+
+  let cart = laadCart();
+  let cartNote = localStorage.getItem(NOTE_KEY) || '';
+  cartNoteEl.value = cartNote;
+
+  function slaCartOp(){
+    try{ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){}
+  }
+
+  function cartAantal(){
+    return cart.reduce(function(s, r){ return s + r.qty; }, 0);
+  }
+
+  function cartSubtotaal(){
+    return cart.reduce(function(s, r){
+      const p = vindProduct(r.id);
+      return p ? s + Number(p.prijs) * r.qty : s;
+    }, 0);
+  }
+
+  function pulsBadge(){
+    cartBadge.classList.remove('pulse');
+    void cartBadge.offsetWidth; // animatie opnieuw triggeren
+    cartBadge.classList.add('pulse');
+  }
+
+  function updateCartKnop(){
+    const n = cartAantal();
+    cartBadge.textContent = String(n);
+    cartFab.classList.toggle('show', n > 0);
+  }
+
+  function addToCart(id){
+    const bestaand = cart.find(function(r){ return String(r.id) === String(id); });
+    if(bestaand){ bestaand.qty += 1; }
+    else{ cart.push({ id: id, qty: 1 }); }
+    slaCartOp();
+    updateCartKnop();
+    pulsBadge();
+    renderCart();
+  }
+
+  // Bevestiging op de knop ("Toegevoegd ✓" ~1,2s)
+  let addBtnTimer = null;
+  const ADD_TEKST = 'In winkelmand';
+  cartAddBtn.addEventListener('click', function(){
+    if(!huidigProduct || !heeftPrijs(huidigProduct)) return;
+    addToCart(huidigProduct.id);
+    cartAddBtn.textContent = 'Toegevoegd ✓';
+    if(addBtnTimer) clearTimeout(addBtnTimer);
+    addBtnTimer = setTimeout(function(){
+      cartAddBtn.textContent = ADD_TEKST;
+      addBtnTimer = null;
+    }, 1200);
+  });
+
+  function openCart(){
+    renderCart();
+    cartPanel.classList.add('open');
+    cartBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function sluitCart(){
+    if(!cartPanel.classList.contains('open')) return;
+    cartPanel.classList.remove('open');
+    cartBackdrop.classList.remove('open');
+    if(!overlay.classList.contains('open')){
+      document.body.style.overflow = '';
+    }
+  }
+
+  cartFab.addEventListener('click', openCart);
+  cartClose.addEventListener('click', sluitCart);
+  cartBackdrop.addEventListener('click', sluitCart);
+
+  function renderCart(){
+    cartBody.innerHTML = '';
+
+    if(!cart.length){
+      cartFoot.style.display = 'none';
+      const leeg = document.createElement('div');
+      leeg.className = 'cart-empty';
+      leeg.textContent = 'Je winkelmand is leeg.';
+      cartBody.appendChild(leeg);
+      return;
+    }
+
+    cartFoot.style.display = 'flex';
+
+    cart.forEach(function(regel, idx){
+      const p = vindProduct(regel.id);
+      if(!p) return;
+
+      const lijn = document.createElement('div');
+      lijn.className = 'cart-line';
+
+      const img = document.createElement('img');
+      img.className = 'cart-line-img';
+      img.src = p.img || '';
+      img.alt = p.titel || '';
+      lijn.appendChild(img);
+
+      const info = document.createElement('div');
+      info.className = 'cart-line-info';
+
+      const titel = document.createElement('div');
+      titel.className = 'cart-line-title';
+      titel.textContent = p.titel || '';
+      info.appendChild(titel);
+
+      const prijsEl = document.createElement('div');
+      prijsEl.className = 'cart-line-prijs';
+      prijsEl.textContent = formatPrice(p.prijs) + ' per stuk';
+      info.appendChild(prijsEl);
+
+      const onder = document.createElement('div');
+      onder.className = 'cart-line-onder';
+
+      const qty = document.createElement('div');
+      qty.className = 'qty';
+
+      const minBtn = document.createElement('button');
+      minBtn.className = 'qty-btn';
+      minBtn.type = 'button';
+      minBtn.setAttribute('aria-label', 'Minder');
+      minBtn.textContent = '−';
+      minBtn.addEventListener('click', function(){
+        if(regel.qty <= 1){
+          cart.splice(idx, 1); // bij qty 1 = verwijderen
+        }else{
+          regel.qty -= 1;
+        }
+        slaCartOp();
+        updateCartKnop();
+        renderCart();
+      });
+
+      const nr = document.createElement('span');
+      nr.className = 'qty-nr';
+      nr.textContent = String(regel.qty);
+
+      const plusBtn = document.createElement('button');
+      plusBtn.className = 'qty-btn';
+      plusBtn.type = 'button';
+      plusBtn.setAttribute('aria-label', 'Meer');
+      plusBtn.textContent = '+';
+      plusBtn.addEventListener('click', function(){
+        regel.qty += 1;
+        slaCartOp();
+        updateCartKnop();
+        renderCart();
+      });
+
+      qty.appendChild(minBtn);
+      qty.appendChild(nr);
+      qty.appendChild(plusBtn);
+      onder.appendChild(qty);
+
+      const regelTotaal = document.createElement('div');
+      regelTotaal.className = 'cart-line-totaal';
+      regelTotaal.textContent = formatPrice(Number(p.prijs) * regel.qty);
+      onder.appendChild(regelTotaal);
+
+      info.appendChild(onder);
+      lijn.appendChild(info);
+      cartBody.appendChild(lijn);
+    });
+
+    updateBetaal();
+  }
+
+  function updateBetaal(){
+    const totaal = cartSubtotaal();
+    cartSubtotaalEl.textContent = formatPrice(totaal);
+    const teWeinig = totaal < MIN_BESTELLING;
+    idealBtn.disabled = teWeinig;
+    minOrderEl.style.display = teWeinig ? 'block' : 'none';
+  }
+
+  cartNoteEl.addEventListener('input', function(){
+    cartNote = cartNoteEl.value;
+    try{ localStorage.setItem(NOTE_KEY, cartNote); }catch(e){}
+  });
+
+  /* ================= BETALEN ================= */
+
+  idealBtn.addEventListener('click', function(){
+    if(idealBtn.disabled || !cart.length) return;
+
+    const totaal = cartSubtotaal();
+
+    checkoutBedrag.textContent = 'Te betalen: ' + formatPrice(totaal);
+
+    const itemsTekst = cart.map(function(r){
+      const p = vindProduct(r.id);
+      return p ? (r.qty + 'x ' + (p.titel || 'product')) : '';
+    }).filter(Boolean).join(', ');
+
+    const bericht = 'Hoi! Ik heb net ' + formatPrice(totaal) +
+      ' betaald via de webshop voor: ' + itemsTekst +
+      '. Maat/opmerking: ' + ((cartNote && cartNote.trim()) || '-');
+
+    checkoutWa.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(bericht);
+
+    checkoutOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Na korte overgang naar de betaalpagina (bedrag met punt en exact 2 decimalen)
+    setTimeout(function(){
+      window.location.href = BETAAL_URL + '?amount=' + totaal.toFixed(2);
+    }, 600);
+  });
+
+  /* ================= START ================= */
+
   renderChips();
   applyFilters();
+  updateCartKnop();
+  renderCart();
 })();
 </script>
 </body>
