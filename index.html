@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>YZ SHOP</title>
+<style>
+  :root{
+    --bg:#171a1b;
+    --bg-alt:#1f2324;
+    --text:#f2f3ed;
+    --text-dim:#9a9d97;
+    --accent:#d7ff3f;
+    --whatsapp:#25d366;
+    --border:#2b2f30;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+  html,body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    width:100%;
+    overflow-x:hidden;
+  }
+
+  body{min-height:100vh;}
+
+  a{color:inherit;text-decoration:none;}
+
+  img{display:block;max-width:100%;}
+
+
+  /* HEADER */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(23,26,27,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    padding:14px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .logo{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  .logo span{color:var(--accent);}
+
+  .search-wrap{position:relative;width:100%;}
+
+  #search{
+    width:100%;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:11px 14px;
+    border-radius:10px;
+
+    font-size:15px;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  #search::placeholder{color:var(--text-dim);}
+  #search:focus{border-color:var(--accent);}
+
+  @media(min-width:700px){
+    header{
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 32px;
+    }
+    .search-wrap{width:320px;}
+  }
+
+  /* GRID */
+  main{padding:16px;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  @media(min-width:600px){
+    .grid{grid-template-columns:repeat(3,1fr);gap:16px;}
+    main{padding:24px;}
+  }
+  @media(min-width:900px){
+    .grid{grid-template-columns:repeat(4,1fr);}
+
+  }
+  @media(min-width:1300px){
+    .grid{grid-template-columns:repeat(5,1fr);}
+  }
+
+  .card{
+    cursor:pointer;
+    background:var(--bg-alt);
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    transition:transform .15s ease,border-color .15s ease;
+  }
+  .card:hover{border-color:var(--accent);}
+  .card:active{transform:scale(0.97);}
+
+  .card-img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    background:#0f1112;
+  }
+
+  .card-info{padding:10px 12px 14px;}
+
+  .card-title{
+    font-size:13px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+    line-height:1.3;
+  }
+
+
+  .card-price{
+    margin-top:4px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--accent);
+  }
+
+  .empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-dim);
+    font-size:14px;
+  }
+
+  /* OVERLAY */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    z-index:100;
+    display:none;
+    flex-direction:column;
+    overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+
+  .overlay-top{
+    position:sticky;
+    top:0;
+    z-index:5;
+
+    display:flex;
+    justify-content:flex-end;
+    padding:14px 16px;
+    background:linear-gradient(to bottom, rgba(23,26,27,.95), transparent);
+  }
+
+  .close-btn{
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    color:var(--text);
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .product-view{
+    padding:0 16px 40px;
+    max-width:1000px;
+    margin:0 auto;
+    width:100%;
+  }
+
+  .main-photo-wrap{
+    width:100%;
+    aspect-ratio:1/1;
+    background:#0f1112;
+
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--border);
+  }
+
+  #mainPhoto{width:100%;height:100%;object-fit:cover;}
+
+  .thumbnails{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+    overflow-x:auto;
+    padding-bottom:4px;
+  }
+
+  .thumb{
+    width:64px;
+    height:64px;
+    flex:0 0 auto;
+    border-radius:8px;
+    overflow:hidden;
+    border:2px solid transparent;
+    cursor:pointer;
+    background:#0f1112;
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;}
+  .thumb.active{border-color:var(--accent);}
+
+  .info{margin-top:24px;}
+
+  #productTitle{
+    font-size:22px;
+
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+
+  #productPrice{
+    margin-top:8px;
+    font-size:18px;
+    font-weight:700;
+    color:var(--accent);
+  }
+
+  .whatsapp-btn{
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    background:var(--whatsapp);
+    color:#0b1a0f;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    padding:15px 20px;
+    border-radius:12px;
+    font-size:15px;
+    border:none;
+  }
+
+  @media(min-width:700px){
+    .product-view{
+
+      display:grid;
+      grid-template-columns:1.1fr 1fr;
+      gap:40px;
+      padding:20px 32px 50px;
+      align-items:start;
+    }
+    .info{margin-top:0;}
+    .whatsapp-btn{width:auto;padding:15px 36px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YZ <span>SHOP</span></div>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Zoek een product...">
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-top">
+    <button class="close-btn" id="closeBtn" aria-label="Sluiten">&times;</button>
+  </div>
+  <div class="product-view">
+    <div class="gallery">
+      <div class="main-photo-wrap">
+        <img id="mainPhoto" src="" alt="">
+
+      </div>
+      <div class="thumbnails" id="thumbnails"></div>
+    </div>
+    <div class="info">
+      <h1 id="productTitle"></h1>
+      <div id="productPrice"></div>
+      <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank" rel="noopener">Bestel via WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  const PRODUCTS = (window.PRODUCTS && Array.isArray(window.PRODUCTS)) ? window.PRODUCTS : [];
+  const WHATSAPP_NUMBER = "31684805378";
+
+  const grid = document.getElementById('grid');
+  const searchInput = document.getElementById('search');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+  const mainPhoto = document.getElementById('mainPhoto');
+  const thumbnails = document.getElementById('thumbnails');
+  const productTitle = document.getElementById('productTitle');
+  const productPrice = document.getElementById('productPrice');
+  const whatsappBtn = document.getElementById('whatsappBtn');
+
+  function formatPrice(p){
+    if(p === undefined || p === null || p === '') return '';
+    const num = Number(p);
+    if(isNaN(num)) return String(p);
+    return '€ ' + num.toFixed(2).replace('.', ',');
+
+  }
+
+  function renderGrid(items){
+    grid.innerHTML = '';
+    if(!items.length){
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.textContent = 'Geen producten gevonden.';
+      grid.appendChild(empty);
+      return;
+    }
+    items.forEach(function(p){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.addEventListener('click', function(){ openProduct(p); });
+
+      const img = document.createElement('img');
+      img.className = 'card-img';
+      img.src = p.img || '';
+      img.alt = p.titel || '';
+      card.appendChild(img);
+
+      const info = document.createElement('div');
+      info.className = 'card-info';
+
+      const title = document.createElement('div');
+      title.className = 'card-title';
+      title.textContent = p.titel || '';
+      info.appendChild(title);
+
+      const priceText = formatPrice(p.prijs);
+      if(priceText){
+
+        const price = document.createElement('div');
+        price.className = 'card-price';
+        price.textContent = priceText;
+        info.appendChild(price);
+      }
+
+      card.appendChild(info);
+      grid.appendChild(card);
+    });
+  }
+
+  function openProduct(p){
+    const fotos = (p.fotos && p.fotos.length) ? p.fotos : (p.img ? [p.img] : []);
+
+    mainPhoto.src = fotos[0] || '';
+    mainPhoto.alt = p.titel || '';
+
+    thumbnails.innerHTML = '';
+    fotos.forEach(function(src, i){
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb' + (i === 0 ? ' active' : '');
+      const tImg = document.createElement('img');
+      tImg.src = src;
+      tImg.alt = '';
+      thumb.appendChild(tImg);
+      thumb.addEventListener('click', function(){
+        mainPhoto.src = src;
+        thumbnails.querySelectorAll('.thumb').forEach(function(t){ t.classList.remove('active'); });
+        thumb.classList.add('active');
+      });
+      thumbnails.appendChild(thumb);
+    });
+
+
+    productTitle.textContent = p.titel || '';
+
+    const priceText = formatPrice(p.prijs);
+    productPrice.textContent = priceText;
+    productPrice.style.display = priceText ? 'block' : 'none';
+
+    const message = 'Hoi! Ik wil graag "' + (p.titel || 'dit product') + '" bestellen.';
+    whatsappBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0,0);
+  }
+
+  function closeProduct(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeProduct);
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay){ closeProduct(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeProduct(); }
+  });
+
+  searchInput.addEventListener('input', function(){
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = !q ? PRODUCTS : PRODUCTS.filter(function(p){
+      return (p.titel || '').toLowerCase().includes(q);
+
+    });
+    renderGrid(filtered);
+  });
+
+  renderGrid(PRODUCTS);
+})();
+</script>
+</body>
+</html>
