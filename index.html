@@ -146,6 +146,41 @@
     font-size:14px;
   }
 
+  /* CATEGORIE-CHIPS */
+  .chips{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:2px 2px 14px;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .chips::-webkit-scrollbar{display:none;}
+
+  .chip{
+    flex:0 0 auto;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-size:13px;
+    font-weight:600;
+    padding:8px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:border-color .15s ease,color .15s ease,background .15s ease;
+  }
+  .chip.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#171a1b;
+  }
+  .chip small{
+    font-weight:700;
+    opacity:.65;
+    margin-left:4px;
+  }
+
   /* OVERLAY */
   .overlay{
     position:fixed;
@@ -283,6 +318,7 @@
 </header>
 
 <main>
+  <div class="chips" id="chips"></div>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -312,7 +348,37 @@
   const PRODUCTS = (window.PRODUCTS && Array.isArray(window.PRODUCTS)) ? window.PRODUCTS : [];
   const WHATSAPP_NUMBER = "31684805378";
 
+  // Categorie-bepaling op titel (volgorde = prioriteit)
+  const CATEGORIES = [
+    ['Schoenen', ['sneaker','schoen','slipper','ugg','crocs','boot','runner','trainer','kayano','dunk','jordan','cloudtilt','yeezy','samba','gazelle','loafer','b25','b30','b22','shoe']],
+    ['Jassen', ['jas','jacket','vest','bodywarmer','coat','parka','puffer','nuptse','moncler','parajumpers','north face','himalaya','bomber','windbreaker']],
+    ['Shirts', ['shirt','blouse','tee','polo','jersey','top']],
+    ['Trainingspakken & Sets', ['trainingspak','tracksuit','clothing set','set']],
+    ['Hoodies & Sweaters', ['hoodie','hoody','sweater','crewneck','trui','fear of god','essentials']],
+    ['Broeken', ['broek','pants','pant','jogger','trouser','cargo']],
+    ['Shorts', ['short']],
+    ['Tassen', ['tas','bag','wallet','portemonnee','duffle','purse']],
+    ['Petten', ['pet','headwear','cap','beanie','hat']],
+    ['Brillen', ['bril','glasses','sunglasses']],
+    ['Accessoires', ['accessor','sok','sock','rimowa','koffer','scarf','sjaal']]
+  ];
+
+  function categorieVan(titel){
+    const t = (titel || '').toLowerCase();
+    for (const [naam, tokens] of CATEGORIES){
+      for (const tok of tokens){
+        if (t.indexOf(tok) !== -1) return naam;
+      }
+    }
+    return 'Overig';
+  }
+
+  PRODUCTS.forEach(function(p){ p._cat = categorieVan(p.titel); });
+
+  const CHIPS = ['Alles'].concat(CATEGORIES.map(function(c){ return c[0]; })).concat(['Overig']);
+
   const grid = document.getElementById('grid');
+  const chipsEl = document.getElementById('chips');
   const searchInput = document.getElementById('search');
   const overlay = document.getElementById('overlay');
   const closeBtn = document.getElementById('closeBtn');
@@ -322,12 +388,42 @@
   const productPrice = document.getElementById('productPrice');
   const whatsappBtn = document.getElementById('whatsappBtn');
 
+  let actieveCat = 'Alles';
+
   function formatPrice(p){
     if(p === undefined || p === null || p === '') return '';
     const num = Number(p);
     if(isNaN(num)) return String(p);
     return '€ ' + num.toFixed(2).replace('.', ',');
 
+  }
+
+  function renderChips(){
+    chipsEl.innerHTML = '';
+    CHIPS.forEach(function(cat){
+      const n = cat === 'Alles' ? PRODUCTS.length : PRODUCTS.filter(function(p){ return p._cat === cat; }).length;
+      if(cat !== 'Alles' && n === 0) return;
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (cat === actieveCat ? ' active' : '');
+      chip.innerHTML = cat + ' <small>' + n + '</small>';
+      chip.addEventListener('click', function(){
+        actieveCat = cat;
+        renderChips();
+        applyFilters();
+        window.scrollTo(0,0);
+      });
+      chipsEl.appendChild(chip);
+    });
+  }
+
+  function applyFilters(){
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = PRODUCTS.filter(function(p){
+      const catOk = actieveCat === 'Alles' || p._cat === actieveCat;
+      const qOk = !q || (p.titel || '').toLowerCase().includes(q);
+      return catOk && qOk;
+    });
+    renderGrid(filtered);
   }
 
   function renderGrid(items){
@@ -423,15 +519,11 @@
   });
 
   searchInput.addEventListener('input', function(){
-    const q = searchInput.value.trim().toLowerCase();
-    const filtered = !q ? PRODUCTS : PRODUCTS.filter(function(p){
-      return (p.titel || '').toLowerCase().includes(q);
-
-    });
-    renderGrid(filtered);
+    applyFilters();
   });
 
-  renderGrid(PRODUCTS);
+  renderChips();
+  applyFilters();
 })();
 </script>
 </body>
