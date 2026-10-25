@@ -288,137 +288,57 @@ window.PRODUCTS = [
    "img/247_05_7b27f171ab6e.jpg",
    "img/247_06_ea691a1ba2c8.jpg",
    "img/247_07_b5e0fa7d0ac1.jpg",
-   "img/247_01_3c3b77d684cd.jpg"
-  ]
- },
- {
-  "id": "1825040",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/226.jpg",
-  "fotos": [
+   "img/247_01_3c3b77d684cd.jpg",
    "img/226.jpg",
    "img/226_06_bab345d94960.jpg",
    "img/226_01_3a7eba8fbe90.jpg",
    "img/226_03_b51007563699.jpg",
    "img/226_04_b11c82073dfc.jpg",
    "img/226_05_2f63a7f49c6a.jpg",
-   "img/226_02_45e39bf71979.jpg"
-  ]
- },
- {
-  "id": "1825939",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/225.jpg",
-  "fotos": [
+   "img/226_02_45e39bf71979.jpg",
    "img/225.jpg",
    "img/225_05_80d3537161e0.jpg",
    "img/225_03_6425a78ccd93.jpg",
    "img/225_01_ded759bf41f4.jpg",
-   "img/225_06_f1a4803651d7.jpg"
-  ]
- },
- {
-  "id": "1904034",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/132.jpg",
-  "fotos": [
+   "img/225_06_f1a4803651d7.jpg",
    "img/132.jpg",
    "img/132_02_ab5a204044d4.jpg",
    "img/132_03_75a452c2ca43.jpg",
    "img/132_04_fa70617e1e01.jpg",
-   "img/132_06_e48cd2e62ef9.jpg"
-  ]
- },
- {
-  "id": "1904035",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/131.jpg",
-  "fotos": [
+   "img/132_06_e48cd2e62ef9.jpg",
    "img/131.jpg",
    "img/131_03_ac83e7a879a5.jpg",
    "img/131_02_2712ed320b70.jpg",
    "img/131_05_3e0bbb0be54b.jpg",
    "img/131_01_b5d0b2144344.jpg",
-   "img/131_06_f4de03e0e560.jpg"
-  ]
- },
- {
-  "id": "1919965",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/108.jpg",
-  "fotos": [
+   "img/131_06_f4de03e0e560.jpg",
    "img/108.jpg",
    "img/108_04_6c7122dd21e3.jpg",
    "img/108_03_d0416a3a8b42.jpg",
    "img/108_02_75e4e280737e.jpg",
    "img/108_06_d33c1e6d1fbf.jpg",
-   "img/108_01_e3d0d0436541.jpg"
-  ]
- },
- {
-  "id": "1923526",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/96.jpg",
-  "fotos": [
+   "img/108_01_e3d0d0436541.jpg",
    "img/96.jpg",
    "img/96_04_f95822795f4e.jpg",
    "img/96_05_62a079fd8321.jpg",
    "img/96_02_947e8d97ec89.jpg",
    "img/96_06_a862db9caa2f.jpg",
-   "img/96_01_02bbcd5e365b.jpg"
-  ]
- },
- {
-  "id": "1924882",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/87.jpg",
-  "fotos": [
+   "img/96_01_02bbcd5e365b.jpg",
    "img/87.jpg",
    "img/87_02_7a4961ceef35.jpg",
    "img/87_06_17f76644a681.jpg",
    "img/87_03_edecda5cbfee.jpg",
-   "img/87_01_a1afd715b504.jpg"
-  ]
- },
- {
-  "id": "1925523",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/78.jpg",
-  "fotos": [
+   "img/87_01_a1afd715b504.jpg",
    "img/78.jpg",
    "img/78_06_fb878b2a340c.jpg",
    "img/78_05_65f8380bfe8a.jpg",
    "img/78_02_73cf95bce12e.jpg",
-   "img/78_01_a32c3b8f5b14.jpg"
-  ]
- },
- {
-  "id": "1940162",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/47.jpg",
-  "fotos": [
+   "img/78_01_a32c3b8f5b14.jpg",
    "img/47.jpg",
    "img/47_04_41c14b18bd9e.jpg",
    "img/47_05_62edcf7aaeed.jpg",
    "img/47_06_7bb413580a64.jpg",
-   "img/47_01_ec71421095bf.jpg"
-  ]
- },
- {
-  "id": "1944838",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/38.jpg",
-  "fotos": [
+   "img/47_01_ec71421095bf.jpg",
    "img/38.jpg",
    "img/38_10_e1f3510ed046.jpg",
    "img/38_09_412efc71c995.jpg",
@@ -431,59 +351,27 @@ window.PRODUCTS = [
    "img/38_01_203da912e676.jpg",
    "img/38_13_7cb7507db20d.jpg",
    "img/38_06_90ed4f825418.jpg",
-   "img/38_07_a99f6df387b2.jpg"
-  ]
- },
- {
-  "id": "1945991",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/34.jpg",
-  "fotos": [
+   "img/38_07_a99f6df387b2.jpg",
    "img/34.jpg",
    "img/34_03_bf92b9d4899f.jpg",
    "img/34_04_433fd53aeb5e.jpg",
    "img/34_02_8789ba1becc6.jpg",
    "img/34_05_321b8f6c4d6c.jpg",
-   "img/34_06_e9a4a813fc43.jpg"
-  ]
- },
- {
-  "id": "1947119",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/32.jpg",
-  "fotos": [
+   "img/34_06_e9a4a813fc43.jpg",
    "img/32.jpg",
    "img/32_03_d49b291ecb13.jpg",
    "img/32_01_2a913d4e4a65.jpg",
    "img/32_04_f5777b043802.jpg",
    "img/32_02_3a543b0a57ce.jpg",
    "img/32_07_9fa7a2c1b6ce.jpg",
-   "img/32_06_09069e45f64e.jpg"
-  ]
- },
- {
-  "id": "1947120",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/31.jpg",
-  "fotos": [
+   "img/32_06_09069e45f64e.jpg",
    "img/31.jpg",
    "img/31_04_64a441b451f1.jpg",
    "img/31_05_bf1f0c3ba9b1.jpg",
    "img/31_03_a12283e7266d.jpg",
    "img/31_06_8f19f6604c0f.jpg",
    "img/31_01_e3dfb7f63a40.jpg",
-   "img/31_07_03f891740178.jpg"
-  ]
- },
- {
-  "id": "1947121",
-  "titel": "Alo Schoenen",
-  "prijs": "",
-  "img": "img/30.jpg",
-  "fotos": [
+   "img/31_07_03f891740178.jpg",
    "img/30.jpg",
    "img/30_04_9f81a2dd2ae4.jpg",
    "img/30_02_8c05760a41d5.jpg",
