@@ -4039,12 +4039,11 @@ window.PRODUCTS = [
   "img": "img/540.jpg",
   "fotos": [
    "img/540.jpg",
-   "img/540_05_eddb284144b0.jpg",
-   "img/540_04_a419f6a86437.jpg",
-   "img/540_00_db2bab5e2172.jpg",
    "img/540_01_fc8ac2b50979.jpg",
-   "img/540_06_2a7b4dfa861f.jpg",
-   "img/540_02_2f95f53763e3.jpg"
+   "img/540_02_2f95f53763e3.jpg",
+   "img/540_04_a419f6a86437.jpg",
+   "img/540_05_eddb284144b0.jpg",
+   "img/540_06_2a7b4dfa861f.jpg"
   ]
  },
  {
